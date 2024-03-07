@@ -19,14 +19,26 @@ var (
 	}
 )
 
-func ExecDistribute() {
+func ExecDistribute(min, max *int) {
+
+	Min := 3
+	Max := 10
+
+	if *min != 0 {
+		Min = *min
+	}
+
+	if *max != 0 {
+		Max = *max
+	}
+
 	for i := range 15 {
-		distribute(i)
+		distribute(i, Min, Max)
 	}
 }
 
-func distribute(iter int) {
-	set := generateSetOfHashes(rand.IntN(45-3) + 3)
+func distribute(iter, min, max int) {
+	set := generateSetOfHashes(rand.IntN(max-min) + min)
 
 	itemsPerNode := len(set) / len(nodes)
 	remainder := len(set) % len(nodes)
@@ -39,9 +51,17 @@ func distribute(iter int) {
 			endIndex++
 			remainder--
 		}
-		distributedSets[node] = set[startIndex:endIndex]
+
+		// if part of the set has length - assign tasks (transactions) to node
+		if len(set[startIndex:endIndex]) != 0 {
+			distributedSets[node] = set[startIndex:endIndex]
+		}
+
 		startIndex = endIndex
 	}
+
+	// just add total_task key to validate that all tasks distributed between nodes
+	distributedSets["total_tasks"] = []string{fmt.Sprintf("%d", len(set))}
 
 	f, _ := os.Create(fmt.Sprintf("tasks/distr/debug-%d.json", iter))
 	defer f.Close()

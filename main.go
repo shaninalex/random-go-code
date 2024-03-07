@@ -9,16 +9,22 @@ import (
 
 func main() {
 
-	hash := flag.Bool("hash", false, "Hash function")
-	distribute := flag.Bool("distribute", false, "Distribute items between nodes")
+	hash := flag.Bool("hash", false, "Execute hash function")
+	hashStr := flag.String("hash_str", "", "Hash string")
+
+	distribute := flag.Bool("distribute", false, "Execute distribute items between nodes")
+	distributeMin := flag.Int("dmin", 0, "Minimal amout of hashes set")
+	distributeMax := flag.Int("dmax", 0, "Maximum amout of hashes set")
+
 	flag.Parse()
 
 	if *hash {
+		log.Println(*hashStr)
 		hashing.ExecuteHash()
 	}
 
 	if *distribute {
-		distr.ExecDistribute()
+		distr.ExecDistribute(distributeMin, distributeMax)
 	}
 
 	if !*hash && !*distribute {
