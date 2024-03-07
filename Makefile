@@ -7,3 +7,8 @@ hashing:
 # make dmin=5 dmax=15 distr
 distr:
 	go run .  --dmin=$(dmin) --dmax=$(dmax) --distribute
+
+# Usage:
+# make connect
+connect:
+	go run . --connect_grpc
