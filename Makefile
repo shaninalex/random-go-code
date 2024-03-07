@@ -1,5 +1,9 @@
+# Usage:
+# make hashing
 hashing:
 	go run . --hash
 
+# Usage:
+# make dmin=5 dmax=15 distr
 distr:
-	go run . --distribute
+	go run .  --dmin=$(dmin) --dmax=$(dmax) --distribute
