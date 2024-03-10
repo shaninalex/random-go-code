@@ -1,6 +1,7 @@
 package main
 
 import (
+	comparedatabases "different_tasks/tasks/compare-databases"
 	connectrpcnode "different_tasks/tasks/connectRpcNode"
 	"different_tasks/tasks/distr"
 	"different_tasks/tasks/hashing"
@@ -17,6 +18,8 @@ func main() {
 
 	connectGrpc := flag.Bool("connect_grpc", false, "Connecto to node with grpc")
 
+	taskCompare := flag.Bool("task_compare", false, "Compare tables from different databases")
+
 	flag.Parse()
 
 	if *hash {
@@ -29,5 +32,9 @@ func main() {
 
 	if *connectGrpc {
 		connectrpcnode.ExecuteConnect()
+	}
+
+	if *taskCompare {
+		comparedatabases.Execute()
 	}
 }

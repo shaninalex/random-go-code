@@ -12,3 +12,8 @@ distr:
 # make connect
 connect:
 	go run . --connect_grpc
+
+# Usage:
+# make task_compare
+task_compare:
+	go run . --task_compare
